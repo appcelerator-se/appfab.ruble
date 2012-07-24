@@ -1,23 +1,12 @@
 
-var uiTemplate = (function() {
+var uiTemplate = function(_args) {
+	_args = _args || {};
   
-  var API = { }; 
-  
-  API.factoryView = function(opts){
-    topView = Ti.UI.createView({});
-	
-    return topView; 
-  };
-  
-  API.factoryWindow = function(options){
-     win = Ti.UI.createWindow({title:'uiTemplate'});
-     win.add( API.factoryView( options ) ); 
-     return win; 
-  };
-  
-  return API;
-})(); //end uiTemplate
-Ti.UI.currentWindow.add( uiTemplate.factoryView({}) ); 
-//uiTemplate.factoryWindow({}).open({modal:true});
-//uiTemplate.factoryWindow({}).open({fullscreen:true});  
-//exports = uiTemplate
+	var API = (_args.displayMode === 'view') ? Ti.UI.createView({}) : Ti.UI.createWindow({});
+  	API.title = _args.title || "uiTemplate";
+
+	  
+	return API;
+}; //end uiTemplate
+
+module.exports = uiTemplate;

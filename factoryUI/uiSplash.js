@@ -1,38 +1,23 @@
 
-var uiSplash = (function() {
+var uiSplash = function(_args) {
+  	_args = _args || {};
   	
-  	var API = { }; 
-  	
-  	API.name = "Splash";
+  	var API = (_args.displayMode === 'view') ? Ti.UI.createView({}) : Ti.UI.createWindow({});
+  	API.title = _args.title || "Splash";
 	API.icon = "/KS_nav_ui.png";
 	API.parentNav = null;
-	API.win = null;
+  	API.win = null;
   	
- 	API.factoryView = function(opts){ 
-    	topView = Ti.UI.createView({});
-    	
-    	var imageView = Titanium.UI.createImageView({
-			image:'http://codedog.net/wp-content/uploads/2011/09/appcelerator.png',
-			width:261,
-			height:178,
-			top:20
-		});
+    var imageView = Titanium.UI.createImageView({
+		image:'http://codedog.net/wp-content/uploads/2011/09/appcelerator.png',
+		width:261,
+		height:178,
+		top:20
+	});
 		
-		topView.add( imageView );
-    	return topView;
-  	};//end factoryView
-  	
-  	API.factoryWindow = function(opts){
- 		API.win = Ti.UI.createWindow(UTILS.combine(STYLE.Win, {
-			title : API.name
-		}));
-		API.win.add(API.factoryView(opts));
-		return API.win;
-  	};//end factoryWindow
+	API.add( imageView );
   	
   	return API;
-})(); //end uiSplash
-Ti.UI.currentWindow.add( uiSplash.factoryView({}) ); 
-//uiSplash.factoryWindow({}).open({modal:true});
-//uiSplash.factoryWindow({}).open({fullscreen:true});
-//module.exports = uiSplash
+}; //end uiSplash
+
+module.exports = uiSplash
