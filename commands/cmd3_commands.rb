@@ -105,6 +105,23 @@ command 'uiSplash' do |cmd|
   end
 end
 
+command 'uiSplash 2.0' do |cmd|
+  #cmd.scope = '*.js'
+  cmd.key_binding = "Control+3"
+  cmd.key_binding.mac = "Command+3"
+  #cmd.key_binding = "M1+M3+Q C" # Multiple key stroke key binding
+  
+  cmd.output = :insert_as_snippet
+  cmd.input = :selection, :line
+  cmd.invoke do |context|
+    
+    input = STDIN.read
+    input << "\n"
+    input << IO.read("#{File.dirname(ENV['TM_BUNDLE_SUPPORT'])}/factoryUI/uiSplash20.js")
+    input << "\n"
+  end
+end
+
 command 'uiTwitterTable' do |cmd|
   cmd.key_binding = "Control+3"
   cmd.key_binding.mac = "Command+3"
@@ -116,6 +133,21 @@ command 'uiTwitterTable' do |cmd|
     input = STDIN.read
     input << "\n"
     input << IO.read("#{File.dirname(ENV['TM_BUNDLE_SUPPORT'])}/factoryUI/uiTwitterTable.js")
+    input << "\n"
+  end
+end
+
+command 'uiTwitterTable 2.0' do |cmd|
+  cmd.key_binding = "Control+3"
+  cmd.key_binding.mac = "Command+3"
+  
+  cmd.output = :insert_as_snippet
+  cmd.input = :selection, :line
+  cmd.invoke do |context|
+    
+    input = STDIN.read
+    input << "\n"
+    input << IO.read("#{File.dirname(ENV['TM_BUNDLE_SUPPORT'])}/factoryUI/uiTwitterTable20.js")
     input << "\n"
   end
 end
@@ -147,6 +179,21 @@ command 'uiChess' do |cmd|
     input = STDIN.read
     input << "\n"
     input << IO.read("#{File.dirname(ENV['TM_BUNDLE_SUPPORT'])}/factoryUI/uiChess.js")
+    input << "\n"
+  end
+end
+
+command 'uiChess 2.0' do |cmd|
+  cmd.key_binding = "Control+3"
+  cmd.key_binding.mac = "Command+3"
+  
+  cmd.output = :insert_as_snippet
+  cmd.input = :selection, :line
+  cmd.invoke do |context|
+    
+    input = STDIN.read
+    input << "\n"
+    input << IO.read("#{File.dirname(ENV['TM_BUNDLE_SUPPORT'])}/factoryUI/uiChess20.js")
     input << "\n"
   end
 end

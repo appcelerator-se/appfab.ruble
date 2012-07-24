@@ -31,6 +31,8 @@ command 'gist POST' do |cmd|
   end
 end
 
+
+# Creates new .js files into the best practice folder structure - if folder structure doesn't exists it creates it.
 command 'Ti WinX TabX X.js' do |cmd|
   cmd.key_binding = "Control+1"
   cmd.key_binding.mac = "Command+1"
@@ -42,12 +44,18 @@ command 'Ti WinX TabX X.js' do |cmd|
     className = STDIN.read
     input = STDIN.read
     
-    input << "var win"+className+" = Titanium.UI.createWindow({ title:'"+className+"',  backgroundColor:'#fff', url:'"+className+".js' }); \n"
+    input << "var "+className+"= require('ui/common/"+className+"'); \n"
+    input << "var win"+className+" = new "+className+"({ title:'"+className+"'}); \n"
     input << "var tab"+className+" = Titanium.UI.createTab({ icon:'KS_nav_views.png', title:'"+className+"', window:win"+className+" });  \n"
     input << "tabGroup.addTab(tab"+className+");\n"
     
     CONSOLE.puts "#{context.project.to_dir.path}\n";
-      File.open("#{context.project.to_dir.path}"+File::SEPARATOR+"Resources"+File::SEPARATOR+className+".js", 'w') do |f|
+    if File::exists?("#{context.project.to_dir.path}"+File::SEPARATOR+"Resources"+File::SEPARATOR+"ui"+File::SEPARATOR+"common")
+    else
+      Dir.mkdir("#{context.project.to_dir.path}"+File::SEPARATOR+"Resources"+File::SEPARATOR+"ui")
+      Dir.mkdir("#{context.project.to_dir.path}"+File::SEPARATOR+"Resources"+File::SEPARATOR+"ui"+File::SEPARATOR+"common")
+    end
+    File.open("#{context.project.to_dir.path}"+File::SEPARATOR+"Resources"+File::SEPARATOR+"ui"+File::SEPARATOR+"common"+File::Separator+className+".js", 'w') do |f|
         #f.write "//APPFAB"
     end
     
