@@ -1,9 +1,8 @@
-
 var uiTable = function(_args) {
 	_args = _args || {};
 	  	
 	var API = (_args.displayMode === 'view') ? Ti.UI.createView({}) : Ti.UI.createWindow({});
-	API.data = [
+	API.data = _args.data || [
 		{title:'ROW 1', hasChild:true },
 		{title:'ROW 2', hasChild:true },
 		{title:'ROW 3', hasChild:true },
@@ -17,30 +16,27 @@ var uiTable = function(_args) {
 	var topView = Ti.UI.createView({});
 	
 	var tv = Titanium.UI.createTableView({
-		data:API.data
+		data:API.data,
+		width: Ti.UI.FILL,
+		height: Ti.UI.FILL
 	});
 	
-	// create table view event listener
-	tv.addEventListener('click', function(e)
-	{
-		var newWindow = Ti.UI.createWindow({ backgroundColor: '#ccc'});
-		var closeButton = Ti.UI.createButton({ title:'close', width:100, height: 30, top: 30});
-		newWindow.add( closeButton );
-		closeButton.addEventListener('click', function(e){
-			newWindow.close();
-		});
-		newWindow.open({  transition: Ti.UI.iPhone.AnimationStyle.CURL_UP });
-		
-	});//end click
+	/** Leverage callbacks object parameters to populate event listeners for tableview
+	 * Available events for TableView are:
+	 * click,dblclick,delete,doubletap,dragEnd,dragStart,longclick,longpress,move,pinch,postlayout,scroll,scrollEnd,singletap,swipe
+	 * touchcancel,touchend,touchmove,twofingertap
+	 */
+	if(_args.callbacks){
+		for(var item in _args.callbacks){
+			Ti.API.info(item);
+			tv.addEventListener(item, _args.callbacks[item])
+		}
+	}
 	
 	topView.add( tv );
- 
     API.add(topView);
   
     return API;
 }; //end uiTable
 
 module.exports = uiTable;
-  
-
-
